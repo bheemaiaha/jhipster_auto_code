@@ -1,0 +1,21 @@
+version: '2'
+services:
+    populationexplosion-app:
+        image: populationexplosion
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_MONGODB_URI=mongodb://populationexplosion-mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=PopulationExplosion
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_JEST_URI=http://populationexplosion-elasticsearch:9200
+        ports:
+            - 8080:8080
+    populationexplosion-mongodb:
+        extends:
+            file: mongodb.yml
+            service: populationexplosion-mongodb
+    populationexplosion-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: populationexplosion-elasticsearch
